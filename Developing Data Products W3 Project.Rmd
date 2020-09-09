@@ -1,0 +1,42 @@
+---
+title: "Developing Data Products W3 Project"
+author: "Siddhesh Panhale"
+date: "9/9/2020"
+output: html_document
+---
+## Developing Data Products W3 Project
+
+```{r}
+library(plotly)
+library(ggplot2)
+```
+
+```{r}
+data("USArrests")
+plot_og <- plot_ly(USArrests, x = ~Murder, y = ~Assault, z = ~Rape,
+               marker = list(color = ~Rape, colorscale = c('#FFE1A1', '#683531'), showscale = TRUE))
+plot_og <- plot_og %>% add_markers()
+plot_og <- plot_og %>% layout(scene = list(xaxis = list(title = 'Murder'),
+                                   yaxis = list(title = 'Assault'),
+                                   zaxis = list(title = 'Rape')),
+                      annotations = list(
+                        x = 1.05,
+                        y = 1.05,
+                        text = 'Rape rate',
+                        xref = 'paper',
+                        yref = 'paper',
+                        showarrow = TRUE
+                      ))
+plot_og
+
+```
+
+```{r}
+plot_og2 <- plot_ly(USArrests, x = ~row.names(USArrests), y = ~Rape, text = ~Rape, type = 'scatter', mode = 'markers', color = ~Rape, colors = 'Reds',
+               marker = list(size = ~Rape, opacity = 0.5))
+plot_og2 <- plot_og2 %>% layout(title = 'US Arrests',
+                      xaxis = list(showgrid = FALSE),
+                      yaxis = list(showgrid = FALSE))
+
+plot_og2
+```
